@@ -73,7 +73,7 @@ public class Summoned {
         outPacket.encodeByte(summon.getMoveAbility().getVal());
         outPacket.encodeByte(summon.getAssistType().getVal());
         outPacket.encodeByte(summon.getEnterType().getVal());
-        outPacket.encodeInt(summon.getObjectId());
+        outPacket.encodeInt(summon.getObjectId()); // Not objectId but ?? Maelstorm ID
         outPacket.encodeByte(summon.isFlyMob());
         outPacket.encodeByte(summon.isBeforeFirstAttack());
         outPacket.encodeInt(summon.getTemplateId());
@@ -97,7 +97,12 @@ public class Summoned {
         outPacket.encodeByte(summon.isJaguarActive());
         outPacket.encodeInt(summon.getSummonTerm());
         outPacket.encodeByte(summon.isAttackActive());
-
+        outPacket.encodeByte(1);
+        outPacket.encodeShort(0); // Testing
+        outPacket.encodeInt(0);
+        outPacket.encodeInt(0);
+        outPacket.encodeShort(0);
+        System.out.println("Outpacket: " + outPacket);
         return outPacket;
     }
 
