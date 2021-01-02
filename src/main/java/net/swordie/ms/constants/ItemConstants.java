@@ -1733,9 +1733,9 @@ public class ItemConstants {
         }
         if (equip.hasUsedSlots()) {
             scrolls.add(new ScrollUpgradeInfo(4, "Innocence Scroll 30%",
-                    SpellTraceScrollType.Innocence, 0, new TreeMap<>(), INNOCENCE_ST_COST, 30));
+                    SpellTraceScrollType.Innocence, 1, new TreeMap<>(), INNOCENCE_ST_COST, 30));
             scrolls.add(new ScrollUpgradeInfo(5, "Clean Slate Scroll 5%",
-                    SpellTraceScrollType.CleanSlate, 0, new TreeMap<>(), CLEAN_SLATE_ST_COST, 5));
+                    SpellTraceScrollType.CleanSlate, 1, new TreeMap<>(), CLEAN_SLATE_ST_COST, 5));
         }
         return scrolls;
     }

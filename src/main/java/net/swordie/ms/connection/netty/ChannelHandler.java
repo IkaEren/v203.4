@@ -538,7 +538,10 @@ public class ChannelHandler extends SimpleChannelInboundHandler<InPacket> {
             case REQUEST_SET_HP_BASE_DAMAGE:
                 WorldHandler.handleRequestSetHpBaseDamage(chr, inPacket);
                 break;
-            case USER_EQUIPMENT_ENCHANT_WITH_SINGLE_UI_REQUEST:
+//            case USER_EQUIPMENT_ENCHANT_WITH_SINGLE_UI_REQUEST:
+//                WorldHandler.handleUserEquipmentEnchantWithSingleUIRequest(c, inPacket);
+//                break;
+            case USER_UI_OPEN_ITEM_USE_REQUEST:
                 WorldHandler.handleUserEquipmentEnchantWithSingleUIRequest(c, inPacket);
                 break;
             case USER_SKILL_LEARN_ITEM_USE_REQUEST:

@@ -1137,64 +1137,71 @@ public class WorldHandler {
         ai.updateTime = inPacket.decodeInt();
         ai.skillId = inPacket.decodeInt();
         inPacket.decodeInt(); // hardcoded 0
+        byte idk99 = inPacket.decodeByte();
         byte leftAndAction = inPacket.decodeByte();
         ai.attackActionType = (byte) (leftAndAction & 0x7F);
         ai.left = (byte) (leftAndAction >>> 7) != 0;
         byte mask = inPacket.decodeByte();
         ai.hits = (byte) (mask & 0xF);
-        ai.mobCount = (mask >>> 4) & 0xF;
+        ai.mobCount = (short) ((mask >>> 4) & 0xF);
         inPacket.decodeByte(); // hardcoded 0
         ai.attackAction = inPacket.decodeShort();
         ai.attackCount = inPacket.decodeShort();
         ai.pos = inPacket.decodePosition();
-        inPacket.decodeInt(); // hardcoded -1
+        byte idkbyte1 = inPacket.decodeByte();
+        short idk10 = inPacket.decodeShort();
+        short idk11 = inPacket.decodeShort();
+        int playerLvl = inPacket.decodeInt(); // hardcoded -1
         short idk3 = inPacket.decodeShort();
-        int idk4 = inPacket.decodeInt();
-        inPacket.decodeInt(); // hardcoded 0
+//        inPacket.decodeInt(); // hardcoded 0
         ai.bulletID = inPacket.decodeInt();
         for (int i = 0; i < ai.mobCount; i++) {
-            MobAttackInfo mai = new MobAttackInfo();
-            mai.mobId = inPacket.decodeInt();
-            mai.templateID = inPacket.decodeInt();
-            mai.byteIdk1 = inPacket.decodeByte();
-            mai.byteIdk2 = inPacket.decodeByte();
-            mai.byteIdk3 = inPacket.decodeByte();
-            mai.byteIdk4 = inPacket.decodeByte();
-            mai.byteIdk5 = inPacket.decodeByte();
-            int idk5 = inPacket.decodeInt(); // another template id, same as the one above
-            byte byteIdk6 = inPacket.decodeByte();
-            mai.rect = inPacket.decodeShortRect();
-            short idk6 = inPacket.decodeShort();
-            long[] damages = new long[ai.hits];
-            for (int j = 0; j < ai.hits; j++) {
-                damages[j] = inPacket.decodeLong();
-            }
-            mai.damages = damages;
-            mai.mobUpDownYRange = inPacket.decodeInt();
-//            inPacket.decodeInt(); // crc
-            // Begin PACKETMAKER::MakeAttackInfoPacket
-            byte type = inPacket.decodeByte();
-            String currentAnimationName = "";
-            int animationDeltaL = 0;
-            String[] hitPartRunTimes = new String[0];
-            if (type == 1) {
-                currentAnimationName = inPacket.decodeString();
-                animationDeltaL = inPacket.decodeInt();
-                int hitPartRunTimesSize = inPacket.decodeInt();
-                hitPartRunTimes = new String[hitPartRunTimesSize];
-                for (int j = 0; j < hitPartRunTimesSize; j++) {
-                    hitPartRunTimes[j] = inPacket.decodeString();
+                System.out.println(inPacket);
+                MobAttackInfo mai = new MobAttackInfo();
+                mai.mobId = inPacket.decodeInt();
+                mai.templateID = inPacket.decodeInt();
+                mai.byteIdk1 = inPacket.decodeByte();
+                mai.byteIdk2 = inPacket.decodeByte();
+                mai.byteIdk3 = inPacket.decodeByte();
+                mai.byteIdk4 = inPacket.decodeByte();
+                mai.byteIdk5 = inPacket.decodeByte();
+                int idk5 = inPacket.decodeInt(); // another template id, same as the one above
+                byte byteIdk6 = inPacket.decodeByte();
+                mai.rect = inPacket.decodeShortRect(); // decode 4 Shorts
+                int intIdk = inPacket.decodeInt(); //
+                short idk6 = inPacket.decodeShort();
+                int intIdk1 = inPacket.decodeInt();
+                int intIdk2 = inPacket.decodeInt();
+                long[] damages = new long[ai.hits];
+                for (int j = 0; j < ai.hits; j++) {
+                    damages[j] = inPacket.decodeLong();
                 }
-            } else if (type == 2) {
-                currentAnimationName = inPacket.decodeString();
-                animationDeltaL = inPacket.decodeInt();
-            }
-            // End PACKETMAKER::MakeAttackInfoPacket
-            mai.type = type;
-            mai.currentAnimationName = currentAnimationName;
-            mai.animationDeltaL = animationDeltaL;
-            mai.hitPartRunTimes = hitPartRunTimes;
-            ai.mobAttackInfo.add(mai);
+                mai.damages = damages;
+                mai.mobUpDownYRange = inPacket.decodeInt();
+    //            inPacket.decodeInt(); // crc
+                // Begin PACKETMAKER::MakeAttackInfoPacket
+                byte type = inPacket.decodeByte();
+                String currentAnimationName = "";
+                int animationDeltaL = 0;
+                String[] hitPartRunTimes = new String[0];
+                if (type == 1) {
+                    currentAnimationName = inPacket.decodeString();
+                    animationDeltaL = inPacket.decodeInt();
+                    int hitPartRunTimesSize = inPacket.decodeInt();
+                    hitPartRunTimes = new String[hitPartRunTimesSize];
+                    for (int j = 0; j < hitPartRunTimesSize; j++) {
+                        hitPartRunTimes[j] = inPacket.decodeString();
+                    }
+                } else if (type == 2) {
+                    currentAnimationName = inPacket.decodeString();
+                    animationDeltaL = inPacket.decodeInt();
+                }
+                // End PACKETMAKER::MakeAttackInfoPacket
+                mai.type = type;
+                mai.currentAnimationName = currentAnimationName;
+                mai.animationDeltaL = animationDeltaL;
+                mai.hitPartRunTimes = hitPartRunTimes;
+                ai.mobAttackInfo.add(mai);
         }
         handleAttack(c, ai);
     }

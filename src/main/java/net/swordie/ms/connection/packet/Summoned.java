@@ -73,7 +73,7 @@ public class Summoned {
         outPacket.encodeByte(summon.getMoveAbility().getVal());
         outPacket.encodeByte(summon.getAssistType().getVal());
         outPacket.encodeByte(summon.getEnterType().getVal());
-        outPacket.encodeInt(summon.getObjectId()); // Not objectId but ?? Maelstorm ID
+        outPacket.encodeInt(0); // Not objectId but ?? Maelstorm ID
         outPacket.encodeByte(summon.isFlyMob());
         outPacket.encodeByte(summon.isBeforeFirstAttack());
         outPacket.encodeInt(summon.getTemplateId());
@@ -122,7 +122,7 @@ public class Summoned {
         outPacket.encodeInt(charID);
         outPacket.encodeInt(ai.summon.getObjectId());
 
-        outPacket.encodeByte(ai.summon.getCharLevel());
+        outPacket.encodeInt(ai.summon.getCharLevel()); // Probably not byte anymore because level cap increased
         byte left = (byte) (ai.left ? 1 : 0);
         outPacket.encodeByte((left << 7) | ai.attackActionType);
         byte attackCount = (byte) (ai.mobAttackInfo.size() > 0 ? ai.mobAttackInfo.get(0).damages.length : 0);
@@ -138,7 +138,10 @@ public class Summoned {
         outPacket.encodeByte(ai.attackAction == 0);
         outPacket.encodeShort(ai.attackAction); // ?
         outPacket.encodeShort(ai.attackAction); // ? TODO, one of these is probably attackAction
-
+        // Testing
+        outPacket.encodeShort(0);
+        outPacket.encodeByte(0);
+        outPacket.encodeInt(0);
         return outPacket;
     }
 

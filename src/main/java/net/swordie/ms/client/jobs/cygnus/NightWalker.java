@@ -272,6 +272,8 @@ public class NightWalker extends Noblesse {
                 field = c.getChr().getField();
                 summon.setFlyMob(false);
                 summon.setMoveAbility(MoveAbility.Stop);
+                summon.setMoveAction((byte) 4);
+                summon.setBeforeFirstAttack(true);
                 field.spawnSummon(summon);
                 break;
         }

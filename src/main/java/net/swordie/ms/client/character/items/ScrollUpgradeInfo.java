@@ -46,12 +46,13 @@ public class ScrollUpgradeInfo implements Encodable {
     public void encode(OutPacket outPacket) {
         outPacket.encodeInt(getIconID());
         outPacket.encodeString(getTitle());
-        outPacket.encodeInt(getType().ordinal());
+        outPacket.encodeInt(getType().ordinal()); // 0
         outPacket.encodeInt(getOption());
         outPacket.encodeInt(getMask());
         for (Map.Entry<EnchantStat, Integer> entry : getStats().entrySet()) {
             outPacket.encodeInt(entry.getValue());
         }
+        outPacket.encodeInt(getCost());
         outPacket.encodeInt(getCost());
         outPacket.encodeByte(0); // ignored?
     }
